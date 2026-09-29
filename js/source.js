@@ -141,4 +141,36 @@ $(function () {
         row.appendTo(customerBody);
     });
 
+    // Initialize the dashboard widgets
+    $("button").button();
+    $("#dashboardTabs").tabs();
+    $("#customerDialog").dialog({
+        autoOpen: false,
+        modal: true,
+        width: 450,
+        buttons: {
+            "Create Customer": function () {
+                const name = $("#customerName").val();
+                const email = $("#customerEmail").val();
+                if (!name || !email) {
+                    alert("Please enter a name and email.");
+                    return;
+                }
+                alert("Customer created: " + name);
+                $(this).dialog("close");
+            },
+            "Cancel": function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+    $("#accordion").accordion({
+        collapsible: true,
+        heightStyle: "content"
+    });
+    $("#newCustomerButton").on("click", function () {
+        $("#customerDialog").dialog("open");
+    });
+    $("#customerDate").datepicker();
+
 });
