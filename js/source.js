@@ -99,9 +99,46 @@ $(function () {
     // Do not modify the JS objects above. You will write your code below.
     // *********************************************************************
 
+    // Fill the dashboard from the supplied data
+    $("#username").text(username);
+    $(".revenue-amt").text(revenueAmt);
+    $("#customer-num").text(customerNum);
+    $("#orders-amt").text(ordersAmt);
+    $("#issues-amt").text(issuesAmt);
+    $("#notification-num").text(notifAmt);
 
+    function fillList(selector, items, property) {
+        const list = $(selector).empty();
+        items.forEach(function (item) {
+            $("<li>").text(item[property]).appendTo(list);
+        });
+    }
 
-       
+    fillList("#activity-list", activities, "message");
+    fillList("#system-status-list", messages, "messsage");
+    fillList("#notifications-list", notifications, "messsage");
+    fillList("#tasks-list", tasks, "messsage");
 
-
+    const salesBody = $("#salesTableBody").empty();
+    sales.forEach(function (sale) {
+        const row = $("<tr>");
+        $("<td>").text(sale.product).appendTo(row);
+        $("<td>").text(sale.quantity).appendTo(row);
+        $("<td>").text(sale.revenue).appendTo(row);
+        row.appendTo(salesBody);
     });
+
+    const customerBody = $("#customerTableBody").empty();
+    customers.forEach(function (customer) {
+        const row = $("<tr>");
+        $("<td>").text(customer.name).appendTo(row);
+        $("<td>").text(customer.email).appendTo(row);
+        const status = $("<span>")
+            .addClass("status status-" + customer.status.toLowerCase())
+            .text(customer.status);
+        $("<td>").append(status).appendTo(row);
+        $("<td>").text(customer.joined).appendTo(row);
+        row.appendTo(customerBody);
+    });
+
+});
